@@ -6,20 +6,29 @@ dotenv.config();
 const client = connect("mqtt://" + process.env.MQTT_SERVER_URL); // create a client
 const _topicRead = process.env.TOPICTOREAD;
 const _topicPub = process.env.TOPICTOPUBLISH;
+
 if (!_topicRead) {
   throw new Error("No env file");
 }
 client.on("connect", function () {
   client.subscribe(_topicRead, function (err) {
     if (!err) {
-      console.log("+++ topicRead: " + _topicRead + " topicPub: " + _topicPub);
+      console.log("connected,_topicRead:", _topicRead, "_topicPub:", _topicPub);
     }
   });
 });
 
 client.on("message", function (topic, message) {
-  // message is Buffer
+  // {
+  //   "operationType":"check"
+  // }
 
+  // {
+  //   "operationType":"payment",
+  //   "content":{
+  //     "cardID"
+  //   }
+  // }
   try {
     let time = new Date().getTime();
     const data: { operationType: "check" | "payment"; content?: Object } =

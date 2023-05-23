@@ -4,14 +4,16 @@ dotenv.config();
 const client = connect("mqtt://" + process.env.MQTT_SERVER_URL); // create a client
 
 client.on("connect", function () {
-  client.subscribe("topic", function (err) {
-    // if (!err) {
-    setInterval(() => {
-      client.publish(
-        "liftos08765546789",
-        `{"a":"a", "a":"a", "a": "a", "a": "a"}`
-      );
-    }, 100);
-    // }
+  client.subscribe("liftos08765546789", function (err) {
+    if (!err) {
+      setInterval(() => {
+        client.publish(
+          "liftos08765546789",
+          `{"a":"a", "a":"a", "a": "a", "a": "a"}`
+        );
+      }, 100);
+    } else {
+      console.log(err);
+    }
   });
 });
