@@ -3,7 +3,7 @@ import { connect } from "mqtt"; // import connect from mqtt
 import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config();
 let valibleVersion = 0x00000002;
-const client = connect("mqtt://" + process.env.MQTT_SERVER_URL); // create a client
+const client = connect("mqtt://" + process.env.MQTT_BROKER_URL); // create a client
 const _topicRead = process.env.TOPICTOREAD;
 const _topicPub = process.env.TOPICTOPUBLISH;
 const frimwere = [
@@ -61,8 +61,6 @@ const debug = async (data: any[]) => {
     console.log(data[i]);
   }
 };
-
-
 
 client.on("connect", function () {
   client.subscribe(_topicRead, function (err) {
